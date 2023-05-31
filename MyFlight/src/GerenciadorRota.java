@@ -1,30 +1,23 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class GerenciadorRota {
-    private ArrayList<Rota> rotas = new ArrayList<Rota>();
-    private ArrayList<String> getRotas = new ArrayList<>();
+    ArrayList<Rota> rotas = new ArrayList<>();
+    Map<String, ArrayList<Rota>> dicionarioRotas = new HashMap<>();
 
-    public void addRota(CiaAerea companhia, Aeroporto origem,Aeroporto destination, Aeronave aeronave){
-        rotas.add(new Rota(companhia,origem,destination,aeronave));
-    }
 
-    public Rota printAll(){
-        System.out.println("Companhia     | Origem      | Destinho    | Aeronave");
-        for (Rota r : rotas){
-            return r;
+    public void addRota(String companhia, String origem,String destination, String aeronave){
+        
+        if (!dicionarioRotas.containsKey(origem)) {
+            dicionarioRotas.put(origem, new ArrayList<>());
         }
-        return null;
+        dicionarioRotas.get(origem).add(new Rota(companhia, origem, destination, aeronave));
     }
 
-    public ArrayList<String> getRota(String origem) {
-        ArrayList<String> listaRotas = new ArrayList<>();
-        for (Rota r : rotas){
-            if (r.getOrigem().getCodigo().equalsIgnoreCase(origem)) {
-                listaRotas.add(r.getId());
-            }
-        }
-        return listaRotas;
-    }
+    public void getRota(String origem) {
+        dicionarioRotas.get(origem).stream().forEach(element -> System.out.println(element + " "));    }
 
     public Rota getCodigoRota(String id) {
         for (Rota r : rotas){

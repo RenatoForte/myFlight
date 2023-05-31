@@ -1,25 +1,29 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
-public class GerenciadorAeroporto {
-    private ArrayList<Aeroporto> aeroportos = new ArrayList<Aeroporto>();
+
+public class GerenciadorAeroporto{
+    Map<String, Aeroporto> dicionarioPortos = new HashMap<>();
 
     public void addPorto(String codigo,String nome,double latitude,double longitude){
-        aeroportos.add(new Aeroporto(codigo, nome, latitude, longitude));
+        dicionarioPortos.put(codigo, new Aeroporto(codigo, nome, latitude, longitude));
     }
 
-    public void printAll(){
-        System.out.println("Códigos    | Nomes");
-        for (Aeroporto ap : aeroportos){
-            System.out.println(ap);
-        }
+    public void addPorto(String codigo,String nome,String latitude,String longitude){
+        dicionarioPortos.put(codigo, new Aeroporto(codigo, nome, Double.parseDouble(latitude), Double.parseDouble(longitude)));
     }
 
     public Aeroporto getPorto(String codigo) {
-        for (Aeroporto ap : aeroportos){
-            if (ap.getCodigo().equalsIgnoreCase(codigo)) {
-                return ap;
-            }
-        }
-        return null;
+        return dicionarioPortos.get(codigo);
+    }
+
+    public Geo getGeo(String codigo) {
+        return getPorto(codigo).getGeo();
+    }
+
+    public Map<String, Aeroporto> ordenaNome() {
+        Map<String, Aeroporto> dicionarioOrdenado = new TreeMap<>(dicionarioPortos);
+        return dicionarioOrdenado;
     }
 }

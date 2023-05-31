@@ -1,10 +1,10 @@
-public class Rota {
-    private CiaAerea companhia;
-    private Aeroporto origem;
-    private Aeroporto destino;
-    private Aeronave aeronave;
+public class Rota implements Comparable<CiaAerea> {
+    private String companhia;
+    private String origem;
+    private String destino;
+    private String aeronave;
 
-    public Rota(CiaAerea companhia, Aeroporto origem,Aeroporto destino, Aeronave aeronave) {
+    public Rota(String companhia, String origem,String destino, String aeronave) {
         this.companhia = companhia;
         this.origem = origem;
         this.destino = destino;
@@ -12,15 +12,23 @@ public class Rota {
     }
 
     public String getId(){
-        return companhia.getCodigo()+":"+origem.getCodigo()+"-"+destino.getCodigo();
+        return companhia+":"+origem+"-"+destino;
     }
 
-    public Aeroporto getOrigem() {
+    public String getOrigem() {
         return origem;
+    }
+
+    public String getCia(){
+        return companhia;
     }
 
     @Override
     public String toString() {
-        return String.format("Companhia: %s | Origem: %s | Destino %s | Aeronave: %s", companhia.getCodigo(),origem.getCodigo(),destino.getCodigo(),aeronave.getCodigo());
+        return getId() + aeronave;
+    }
+
+    public int compareTo(CiaAerea outra){
+    return companhia.compareTo(outra.getNome());
     }
 }

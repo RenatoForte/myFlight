@@ -1,30 +1,28 @@
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GerenciadorVoo {
-    private ArrayList<Voo> voos = new ArrayList<Voo>();
+    ArrayList<Voo> voos = new ArrayList<>();
+    Map<LocalDate, ArrayList<Voo>> dicionarioVoo = new HashMap<>();
 
-    public void addVoo(int ano, int mes, int dia, int horas, int minutos, long duracao, Rota rota, Voo.Status status) {
-        voos.add(new Voo(ano,mes,dia,horas,minutos,duracao,rota,status));
+    public void addVoo(int ano, int mes, int dia, int horas, int minutos, long lDuracao, Rota rota, Voo.Status status) {
+
+        LocalDateTime dataHora  = LocalDateTime.of(ano,mes,dia,horas,minutos);
+        Duration duracao = Duration.ofMinutes(lDuracao);
+
+        if (!dicionarioVoo.containsKey(dataHora.toLocalDate())) {
+            dicionarioVoo.put(dataHora.toLocalDate(), new ArrayList<>());
+        }
+        dicionarioVoo.get(dataHora.toLocalDate()).add(new Voo(dataHora, duracao, rota, status));
     }
 
-    public ArrayList<Voo> printAll(){
-        ArrayList<Voo> listaVoos = new ArrayList<>();
-        for (Voo v : voos){
-            listaVoos.add(v);
-        }
-        return listaVoos;
-    }
 
-    public ArrayList<Voo> getVoo(int ano, int mes, int dia){
-        ArrayList<Voo> listaVoo = new ArrayList<>();
-        for (Voo v : voos) {
-            if (v.datahora.toLocalDate().equals(LocalDate.of(ano, mes, dia))) {
-                listaVoo.add(v);
-            }
-        }
-        return listaVoo;
+    public void getVoo(int ano, int mes, int dia){
+        LocalDate procurando = LocalDate.of(ano,mes,dia);
+        dicionarioVoo.get(procurando).stream().forEach(element -> System.out.println(element + " "));
     }
 }
-//    .toLocalDate
-//    localDate of(int ano, int mes, int dia)

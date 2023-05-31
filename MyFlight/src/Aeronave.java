@@ -1,12 +1,20 @@
-public class Aeronave {
+public class Aeronave implements Imprimivel, Comparable<Aeronave> {
     private String codigo;
     private String descricao;
-    private int capacidade;
+    private String capacidade;
 
-    public Aeronave(String codigo,String descricao,int capacidade) {
+    public Aeronave(String codigo, String descricao, String capacidade) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.capacidade = capacidade;
+    }
+
+    public void imprimir() {
+        System.out.println(codigo + " - " + descricao);
+    }
+
+    public int compareTo(Aeronave outra) {
+        return descricao.compareTo(outra.descricao);
     }
 
     public String getCodigo() {
@@ -17,12 +25,12 @@ public class Aeronave {
         return descricao;
     }
 
-    public int getCapacidade() {
+    public String getCapacidade() {
         return capacidade;
     }
 
     @Override
     public String toString() {
-        return String.format("Código: %s | Capacidade: %d | Nome: %s", codigo,capacidade,descricao);
+        return String.format("Código: %s | Capacidade: %s | Nome: %s", codigo, capacidade, descricao);
     }
 }

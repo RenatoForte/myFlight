@@ -1,36 +1,26 @@
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class GerenciadorAeronaves {
-    private ArrayList<Aeronave> aeronaves = new ArrayList<Aeronave>();
+    Map<String, Aeronave> dicionarioNaves = new HashMap<>();
 
-    public void addNave(String codigo, String descricao, int capacidade) {
-        aeronaves.add(new Aeronave(codigo, descricao, capacidade));
+    public void addNave(String codigo, String descricao, String capacidade) {
+        dicionarioNaves.put(codigo, new Aeronave(codigo, descricao, capacidade));
     }
 
-    public Aeronave printAll(){
-        for (Aeronave an : aeronaves){
-            return an;
-        }
-        return null;
-    }
     public Aeronave getNave(String codigo) {
-        for (Aeronave an : aeronaves){
-            if (an.getCodigo().equals(codigo.toUpperCase())) {
-                return an;
-            }
-        }
-        return null;
+        return dicionarioNaves.get(codigo);
+
     }
 
-    public void removeNave(Aeronave aeronave) {
-        aeronaves.remove(aeronave);
+    public void removeNave(String codigo) {
+        dicionarioNaves.remove(codigo);
     }
 
-    public Aeronave getNave(int index) {
-        return aeronaves.get(index);
-    }
-
-    public int getSize() {
-        return aeronaves.size();
+    public Map<String, Aeronave> ordenaNome() {
+        Map<String, Aeronave> dicionarioOrdenado = new TreeMap<>(dicionarioNaves);
+        return dicionarioOrdenado;
     }
 }
